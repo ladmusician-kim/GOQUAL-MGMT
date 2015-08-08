@@ -14,6 +14,27 @@
     <link href="/static/lib/admin/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 
 
+    <?php
+    $total_url = $_SERVER['PHP_SELF'];
+    $arr_splitted_url = explode('/', $total_url);
+
+    $ctrl_name = $arr_splitted_url[count($arr_splitted_url) - 2];
+    $view_name = $arr_splitted_url[count($arr_splitted_url) - 1];
+    $filename = "";
+
+    if ($ctrl_name == 'index.php') {
+        $filename = 'static/css/'.strtolower($view_name).'/index.css';
+    } else {
+        $filename = 'static/css/'.strtolower($ctrl_name).'/'.strtolower($view_name).'.css';
+    }
+
+    if(file_exists($filename)) {
+    ?>
+        <link href="/GOQUAL-MGMT/<?php echo $filename; ?>" rel="stylesheet">
+
+    <?php
+    }
+    ?>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

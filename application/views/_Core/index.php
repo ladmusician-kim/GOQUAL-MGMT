@@ -3,7 +3,7 @@
     <section class="content-header">
         <h1>
             CORE
-            <small>회사 전반적인 이야</small>
+            <small>회사 전반적인 이야기</small>
         </h1>
     </section>
     <section class="content">
@@ -27,7 +27,9 @@
                             ?>
                                     <tr>
                                         <td><?php echo $item->_coreid ?></td>
-                                        <td><?php echo $item->title ?></td>
+                                        <td><a href="<?= site_url('/core/detail?coreid='. $item->_coreid) ?>">
+                                                <?php echo $item->title ?>
+                                            </a></td>
                                         <td><?php echo $item->username?></td>
                                         <td><?php echo date ("Y-m-d",strtotime($item->updated));?></td>
                                         <td><a>숨기기</a></td>

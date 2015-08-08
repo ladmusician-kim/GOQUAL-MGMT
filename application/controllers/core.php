@@ -6,13 +6,26 @@ class Core extends MGMT_Controller {
         $this->load->model('core_model');
     }
 
-    function index() {
+    function index () {
         $cores = $this->core_model->gets();
         $this->__get_views('_Core/index.php', array ('cores' => $cores));
 }
 
-    function create() {
+    function create () {
         $this->__get_views('_Core/create.php', array ('data' => null));
+    }
+
+    function detail () {
+        $core_id = $this->input->get('coreid');
+        $core = $this->core_model->get_by_id($core_id);
+
+        if ($core != null) {
+            $this->__get_views('_Core/detail.php', array ('item' => $core));
+
+        } else {
+            $this->session->set_flashdata('message', '게시글이 없습니다.');
+            redirect('core/index');
+        }
     }
 
     function submit() {

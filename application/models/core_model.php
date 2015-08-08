@@ -29,29 +29,15 @@ class Core_model extends CI_Model {
         return $result;
     }
 
-    function get_all_count () {
-        return $this->db->count_all_results('project');
+    function get_by_id($core_id){
+        $this->db->select('_coreid, title, summary, content, core.updated, user.username');
+        $this->db->where(array ('_coreid'=> $core_id, 'core.isdeprecated' => false));
+        $this->db->join('user', 'user._id = core.for_userid');
+        $rtv = $this->db->get('core');
+        $cores = array_shift($rtv->result());
+
+        return $cores;
+        //echo($data['age']);
+        //return $this->db->get_where('core', array('_coreid'=>$core_id, 'isdeprecated' => false))->row();
     }
-    function get_by_id($project_id){
-        return $this->db->get_where('project', array('_projectid'=>$project_id))->row();
-    }
-    function get_items($sorting, $filter, $page = 1, $per_page = 10) {
-        $base_dto = new BASE_DTO;
-
-        if ($page === 1) {
-            $this->db->limit($per_page);
-
-        } else {
-            $this->db->limit($per_page, ($page - 1) * $per_page);
-        }
-
-        $this->db->select('*');
-        $this->db->from('project');
-        $this->db->join('user', 'user._id = project.admin_userid');
-
-        $result = $this->db->get()->result();
-
-        $base_dto->set_value($result);
-        return $base_dto;
-    }
-}   
+}
