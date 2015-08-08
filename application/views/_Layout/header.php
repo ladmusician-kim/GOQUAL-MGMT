@@ -74,7 +74,7 @@
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="#" data-toggle="control-sidebar">LOGOUT</a>
+                        <a href="<?= site_url('auth/logout') ?>">LOGOUT</a>
                     </li>
                 </ul>
             </div>
