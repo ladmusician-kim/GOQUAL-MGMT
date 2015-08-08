@@ -1,0 +1,13 @@
+a:hover{
+    cursor: pointer;
+}
+.gq-detail-title {
+    margin-bottom: 20px;
+    color: #6f6f6f;
+}
+.gq-item-delete {
+    color: red;
+}
+.gq-item-delete:hover {
+    color: red;
+}

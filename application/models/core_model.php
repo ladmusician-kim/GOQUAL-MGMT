@@ -5,9 +5,8 @@ class Core_model extends CI_Model {
     }
 
     function gets() {
-        $this->db->select('_coreid, title, core.updated, user.username');
+        $this->db->select('_coreid, title, core.updated, core.isdeprecated, user.username');
         $this->db->from('core');
-        $this->db->where('core.isdeprecated = false');
         $this->db->join('user', 'user._id = core.for_userid');
         return $this->db->get()->result();
     }
@@ -30,14 +29,29 @@ class Core_model extends CI_Model {
     }
 
     function get_by_id($core_id){
-        $this->db->select('_coreid, title, summary, content, core.updated, user.username');
-        $this->db->where(array ('_coreid'=> $core_id, 'core.isdeprecated' => false));
+        $this->db->select('_coreid, title, summary, content, core.updated, core.isdeprecated, user.username');
+        $this->db->where(array ('_coreid'=> $core_id));
         $this->db->join('user', 'user._id = core.for_userid');
         $rtv = $this->db->get('core');
         $cores = array_shift($rtv->result());
 
         return $cores;
-        //echo($data['age']);
-        //return $this->db->get_where('core', array('_coreid'=>$core_id, 'isdeprecated' => false))->row();
+    }
+
+    function change_isdeprecated($core_id, $isdeprecated) {
+        try {
+            $data = array(
+                'isdeprecated' => $isdeprecated
+            );
+
+            var_dump($data);
+
+            $this->db->where('_coreid', $core_id);
+            $this->db->update('core', $data);
+
+            return true;
+        } catch(Exception $e) {
+            return false;
+        }
     }
 }

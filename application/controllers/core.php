@@ -28,6 +28,34 @@ class Core extends MGMT_Controller {
         }
     }
 
+    /*
+     *  coreid
+     *  isdeprecated :: 삭제시는 true로, 부활시는 false로
+     */
+    function change_isdeprecated () {
+        $core_id = $this->input->get('coreid');
+        $isdeprecated = $this->input->get('isdeprecated') == 'true' ? true : false;
+
+        $rtv = $this->core_model->change_isdeprecated($core_id, $isdeprecated);
+        if ($rtv) {
+            if ($isdeprecated) {
+                $this->session->set_flashdata('message', '게시글을 성공적으로 삭제하였습니다.');
+            } else {
+                $this->session->set_flashdata('message', '게시글을 성공적으로 부활하였습니다.');
+            }
+
+            redirect('core/index');
+        } else {
+            if ($isdeprecated) {
+                $this->session->set_flashdata('message', '게시글을 삭제하는데 오류가 발생했습니다. 개발자에게 문의하세요.');
+            } else {
+                $this->session->set_flashdata('message', '게시글을 부활하는데 오류가 발생했습니다. 개발자에게 문의하세요.');
+            }
+
+            redirect('core/detail?coreid='.$core_id);
+        }
+    }
+
     function submit() {
         $input_data = array (
             'title' => $this->input->post('title'),

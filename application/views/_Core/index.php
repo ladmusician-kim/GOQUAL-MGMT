@@ -32,7 +32,27 @@
                                             </a></td>
                                         <td><?php echo $item->username?></td>
                                         <td><?php echo date ("Y-m-d",strtotime($item->updated));?></td>
-                                        <td><a>숨기기</a></td>
+                                        <td>
+                                            <?php
+                                             if ($item->isdeprecated) {
+                                            ?>
+                                                 <a href="<?= site_url('core/change_isdeprecated?coreid=' .$item->_coreid) .'&isdeprecated=false'?>"
+                                                    class="gq-item-delete">
+                                                     살리기
+                                                 </a>
+                                            <?php
+                                             } else {
+                                            ?>
+                                                 <a href="<?= site_url('core/change_isdeprecated?coreid=' .$item->_coreid .'&isdeprecated=true') ?>"
+                                                    class="gq-item-survive">
+                                                     숨기기
+                                                 </a>
+
+                                            <?php
+                                             }
+                                            ?>
+
+                                        </td>
                                     </tr>
                             <?php
                                 }

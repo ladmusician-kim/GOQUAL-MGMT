@@ -13,6 +13,8 @@
     <link href="/static/lib/admin/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
     <link href="/static/lib/admin/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 
+    <link href="<?php echo base_url()?>static/css/common.css" rel="stylesheet" type="text/css" />
+
 
     <?php
     $total_url = $_SERVER['PHP_SELF'];
