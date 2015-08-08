@@ -1,6 +1,6 @@
 <?php
 
-class Core_model extends CI_Model
+class Designer_model extends CI_Model
 {
     function __construct()
     {
@@ -9,9 +9,9 @@ class Core_model extends CI_Model
 
     function gets()
     {
-        $this->db->select('_coreid, title, core.updated, core.isdeprecated, user.username');
-        $this->db->from('core');
-        $this->db->join('user', 'user._id = core.for_userid');
+        $this->db->select('_designerid, title, designer.updated, designer.isdeprecated, user.username');
+        $this->db->from('designer');
+        $this->db->join('user', 'user._id = designer.for_userid');
         return $this->db->get()->result();
     }
 
@@ -27,7 +27,7 @@ class Core_model extends CI_Model
             'isdeprecated' => FALSE,
         );
 
-        $this->db->insert('core', $input_data);
+        $this->db->insert('designer', $input_data);
         $result = $this->db->insert_id();
 
         return $result;
@@ -36,7 +36,7 @@ class Core_model extends CI_Model
     function update($data)
     {
         try {
-            $core_id = $data['coreid'];
+            $designer_id = $data['designerid'];
             $data = array(
                 'title' => $data['title'],
                 'summary' => $data['summary'],
@@ -47,8 +47,8 @@ class Core_model extends CI_Model
 
             var_dump($data);
 
-            $this->db->where('_coreid', $core_id);
-            $this->db->update('core', $data);
+            $this->db->where('_designerid', $designer_id);
+            $this->db->update('designer', $data);
 
             return true;
         } catch (Exception $e) {
@@ -56,26 +56,26 @@ class Core_model extends CI_Model
         }
     }
 
-    function get_by_id($core_id)
+    function get_by_id($designer_id)
     {
-        $this->db->select('_coreid, title, summary, content, core.updated, core.isdeprecated, user.username');
-        $this->db->where(array('_coreid' => $core_id));
-        $this->db->join('user', 'user._id = core.for_userid');
-        $rtv = $this->db->get('core');
-        $cores = array_shift($rtv->result());
+        $this->db->select('_designerid, title, summary, content, designer.updated, designer.isdeprecated, user.username');
+        $this->db->where(array('_designerid' => $designer_id));
+        $this->db->join('user', 'user._id = designer.for_userid');
+        $rtv = $this->db->get('designer');
+        $designers = array_shift($rtv->result());
 
-        return $cores;
+        return $designers;
     }
 
-    function change_isdeprecated($core_id, $isdeprecated)
+    function change_isdeprecated($designer_id, $isdeprecated)
     {
         try {
             $data = array(
                 'isdeprecated' => $isdeprecated
             );
 
-            $this->db->where('_coreid', $core_id);
-            $this->db->update('core', $data);
+            $this->db->where('_designerid', $designer_id);
+            $this->db->update('designer', $data);
 
             return true;
         } catch (Exception $e) {
