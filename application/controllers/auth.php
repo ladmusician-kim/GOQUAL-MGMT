@@ -1,20 +1,25 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+
 //require APPPATH . '/libraries/Common_Controller.php';
 
-class Auth extends MGMT_Controller {
-    function __construct () {
+class Auth extends MGMT_Controller
+{
+    function __construct()
+    {
         parent::__construct();
         $this->load->model('user_model');
         $this->load->library('form_validation');
     }
 
-    function index() {
+    function index()
+    {
         redirect('/auth/login');
     }
 
     /* 로그인 */
-    function login() {
+    function login()
+    {
         $this->__is_logined();
 
         $this->form_validation->set_rules('login_email', '이메일', 'required|valid_email');
@@ -22,14 +27,15 @@ class Auth extends MGMT_Controller {
 
         $isValidate = $this->form_validation->run();
 
-        if($isValidate) {
-            $input_data = array ('email' => $this->input->post('login_email'));
+        if ($isValidate) {
+            $input_data = array('email' => $this->input->post('login_email'));
 
             $user = $this->user_model->get_user_by_email($input_data);
 
             // db 정보와 확인
             if ($user != null && $user->email == $input_data['email'] &&
-                password_verify($this->input->post('login_password'), $user->password)) {
+                password_verify($this->input->post('login_password'), $user->password)
+            ) {
                 $this->handle_login($user);
             } else {
                 $this->session->set_flashdata('message', '로그인에 실패하였습니다.');
@@ -44,21 +50,22 @@ class Auth extends MGMT_Controller {
     }
 
     /* 회원가입 */
-    function register() {
+    function register()
+    {
         $this->form_validation->set_rules('register-username', '이메일', 'required|valid_email|is_unique[user.email]');
         $this->form_validation->set_rules('register-password', '비밀번호', 'required|matches[register-password-confirm]');
         $this->form_validation->set_rules('register-password-confirm', '비밀번호 확인', 'required');
 
         $isRegister = $this->form_validation->run();
 
-        if($isRegister) {
-            $input_data = array (
+        if ($isRegister) {
+            $input_data = array(
                 'email' => $this->input->post('register-username'),
                 'password' => password_hash($this->input->post('register-password'), PASSWORD_BCRYPT)
             );
 
             $rtv = $this->user_model->add($input_data);
-            if($rtv > 0) {
+            if ($rtv > 0) {
                 $this->session->set_flashdata('message', '회원가입에 성공하였습니다.');
                 redirect('Auth/login');
             } else {
@@ -72,26 +79,28 @@ class Auth extends MGMT_Controller {
     }
 
     /* 로그아웃 */
-    function logout () {
+    function logout()
+    {
         $this->session->sess_destroy();
         redirect('/Home/index');
     }
 
     /* 비밀번호 찾기 */
-    function forgot_password () {
+    function forgot_password()
+    {
         $this->form_validation->set_rules('forgot_email', '이메일', 'required|valid_email');
 
         $isValidate = $this->form_validation->run();
 
-        if($isValidate) {
-            $input_data = array ('email' => $this->input->post('forgot_email'));
+        if ($isValidate) {
+            $input_data = array('email' => $this->input->post('forgot_email'));
 
             $user = $this->user_model->get_user_by_email($input_data);
 
             if ($user != null &&
                 $user->email == $input_data['email']
             ) {
-                $option = array (
+                $option = array(
                     email => $user->email,
                     password => $user->password
                 );
@@ -113,8 +122,8 @@ class Auth extends MGMT_Controller {
     }
 
 
-
-    function send_email ($option) {
+    function send_email($option)
+    {
         try {
             $this->load->library('email');
 
@@ -129,7 +138,7 @@ class Auth extends MGMT_Controller {
             $this->email->from('admin@newgeneration.kr', 'NEWGENERATION MASTER');
             $this->email->to($option['email']);
             $this->email->subject('비밀번호를 까먹다니 ㅉㅉ');
-            $this->email->message('<p>당신의 비밀번호는 '. $option['password'].'</p> <a target="_blank" href="http://newgeneration.kr/NEWGENERATION/Auth/login">로그인하기</a>');
+            $this->email->message('<p>당신의 비밀번호는 ' . $option['password'] . '</p> <a target="_blank" href="http://newgeneration.kr/NEWGENERATION/Auth/login">로그인하기</a>');
             $this->email->send();
 
             return TRUE;
@@ -138,7 +147,8 @@ class Auth extends MGMT_Controller {
         }
     }
 
-    function handle_login ($user) {
+    function handle_login($user)
+    {
         $username = explode('@', $user->email)[0];
         $this->user_model->logined($user);
 
