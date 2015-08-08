@@ -2,7 +2,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            DESIGNER
+            developer
             <small>회사 전반적인 이야기</small>
         </h1>
     </section>
@@ -23,11 +23,11 @@
                             </thead>
                             <tbody>
                             <?php
-                            foreach ($designers as $item) {
+                            foreach ($developers as $item) {
                                 ?>
                                 <tr>
-                                    <td><?php echo $item->_designerid ?></td>
-                                    <td><a href="<?= site_url('/designer/detail?designerid=' . $item->_designerid) ?>">
+                                    <td><?php echo $item->_developerid ?></td>
+                                    <td><a href="<?= site_url('/developer/detail?developerid=' . $item->_developerid) ?>">
                                             <?php echo $item->title ?>
                                         </a></td>
                                     <td><?php echo $item->username ?></td>
@@ -36,14 +36,14 @@
                                         <?php
                                         if ($item->isdeprecated) {
                                             ?>
-                                            <a href="<?= site_url('designer/change_isdeprecated?designerid=' . $item->_designerid) . '&isdeprecated=false' ?>"
+                                            <a href="<?= site_url('developer/change_isdeprecated?developerid=' . $item->_developerid) . '&isdeprecated=false' ?>"
                                                class="gq-item-survive">
                                                 살리기
                                             </a>
                                             <?php
                                         } else {
                                             ?>
-                                            <a href="<?= site_url('designer/change_isdeprecated?designerid=' . $item->_designerid . '&isdeprecated=true') ?>"
+                                            <a href="<?= site_url('developer/change_isdeprecated?developerid=' . $item->_developerid . '&isdeprecated=true') ?>"
                                                class="gq-item-delete">
                                                 숨기기
                                             </a>
@@ -65,7 +65,7 @@
         </div>
         <div class="row no-print">
             <div class="col-xs-12">
-                <a href="<?= site_url('/designer/create') ?>" class="btn btn-primary pull-right">
+                <a href="<?= site_url('/developer/create') ?>" class="btn btn-primary pull-right">
                     <i class="fa fa-download"></i> 글쓰기
                 </a>
             </div>

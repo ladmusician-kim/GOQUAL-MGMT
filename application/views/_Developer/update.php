@@ -2,7 +2,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            DESIGNER 글쓰기
+            DEVELOPER 글쓰기
             <small>이쁘게 써주세요 회사 이미지가 달렸습니다.</small>
         </h1>
     </section>
@@ -11,9 +11,9 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="box box-info">
-                    <form class="form-horizontal" action="<?= site_url('/designer/update_submit') ?>" method="post"
+                    <form class="form-horizontal" action="<?= site_url('/developer/update_submit') ?>" method="post"
                           id="frm">
-                        <input type="hidden" name="designerid" value='<?php if ($item) echo $item->_designerid ?>'>
+                        <input type="hidden" name="developerid" value='<?php if ($item) echo $item->_developerid ?>'>
 
                         <div class="box-body">
                             <div class="form-group">
@@ -47,9 +47,9 @@
                         </div>
                         <div class="box-footer">
                             <button type="button" id="ng-submit" class="btn btn-primary pull-right">수정하기</button>
-                            <a href="<?= site_url('/designer/detail?designerid=' . $item->_designerid) ?>"
+                            <a href="<?= site_url('/developer/detail?developerid=' . $item->_developerid) ?>"
                                class="btn btn-default pull-right" style="margin-right: 10px;">뒤로가기</a>
-                            <a href="<?= site_url('/designer/index') ?>" class="btn btn-default pull-right"
+                            <a href="<?= site_url('/developer/index') ?>" class="btn btn-default pull-right"
                                style="margin-right: 10px;">목록보기</a>
                         </div>
                     </form>

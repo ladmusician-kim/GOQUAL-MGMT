@@ -1,7 +1,7 @@
 <div class="content-wrapper">
     <section class="content-header">
         <h1>
-            DESIGNER 이야기
+            DEVELOPER 이야기
             <small>
                 작성일: <?php echo date("Y-m-d", strtotime($item->updated)); ?>,
                 작성자: <?php echo $item->username ?>
@@ -45,14 +45,14 @@
                         if ($item->isdeprecated) {
                             ?>
                             <a class="btn btn-danger pull-right"
-                               href="<?= site_url('designer/change_isdeprecated?designerid=' . $item->_designerid) . '&isdeprecated=false' ?>">
+                               href="<?= site_url('developer/change_isdeprecated?developerid=' . $item->_developerid) . '&isdeprecated=false' ?>">
                                 <i class="fa fa-credit-card"></i> 살리기
                             </a>
                             <?php
                         } else {
                             ?>
                             <a class="btn btn-success pull-right"
-                               href="<?= site_url('designer/change_isdeprecated?designerid=' . $item->_designerid) . '&isdeprecated=true' ?>">
+                               href="<?= site_url('developer/change_isdeprecated?developerid=' . $item->_developerid) . '&isdeprecated=true' ?>">
                                 <i class="fa fa-credit-card"></i> 숨기기
                             </a>
 
@@ -61,11 +61,11 @@
                         ?>
 
                         <a class="btn btn-warning pull-right" style="margin-right: 5px;"
-                           href="<?= site_url('designer/update?designerid=' . $item->_designerid) ?>">
+                           href="<?= site_url('developer/update?developerid=' . $item->_developerid) ?>">
                             <i class="fa fa-file-excel-o"></i>수정하기
                         </a>
                         <a class="btn btn-primary pull-right" style="margin-right: 5px;"
-                           href="<?= site_url('designer/index') ?>">
+                           href="<?= site_url('developer/index') ?>">
                             <i class="fa fa-download"></i>목록보기
                         </a>
                     </div>
