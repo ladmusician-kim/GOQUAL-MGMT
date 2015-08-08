@@ -12,7 +12,7 @@
             <div class="col-md-12">
                 <div class="box box-info">
                     <form class="form-horizontal" action="<?=site_url('/core/update_submit')?>" method="post" id="frm">
-                        <input type="hidden" name="coreid" value="<?php if ($item) echo $item->_coreid ?>">
+                        <input type="hidden" name="coreid" value='<?php if ($item) echo $item->_coreid ?>'>
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="title" class="col-sm-1 control-label">제목</label>
@@ -52,4 +52,4 @@
     </section>
 </div>
 
-<input id="gq-content" type="hidden" value="<?php echo $item->content ?>">
+<input id="gq-content" type="hidden" value="<?php echo htmlspecialchars($item->content, ENT_QUOTES); ?>">
