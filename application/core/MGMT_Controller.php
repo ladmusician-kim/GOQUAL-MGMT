@@ -13,16 +13,24 @@ class MGMT_Controller extends CI_Controller
 
     function __get_views($viewStr, $data = null)
     {
-        $this->load->view('_Layout/header.php');
-        $this->load->view('_Layout/navbar.php');
-
-        if ($data != null) {
-            $this->load->view($viewStr, $data);
-        } else {
+        if (strpos($viewStr, 'Auth')) {
+            $this->load->view('_Layout/auth_header.php');
             $this->load->view($viewStr);
+            $this->load->view('_Layout/auth_footer.php');
+        } else {
+            $this->load->view('_Layout/header.php');
+
+            $this->load->view('_Layout/navbar.php');
+
+            if ($data != null) {
+                $this->load->view($viewStr, $data);
+            } else {
+                $this->load->view($viewStr);
+            }
+
+            $this->load->view('_Layout/footer.php');
         }
 
-        $this->load->view('_Layout/footer.php');
     }
 
 

@@ -57,12 +57,6 @@ class Auth extends MGMT_Controller
     }
 
 
-
-
-
-
-
-
     function handle_login($user)
     {
         $username = explode('@', $user->email)[0];

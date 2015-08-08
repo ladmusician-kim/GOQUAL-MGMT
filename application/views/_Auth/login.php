@@ -5,7 +5,7 @@
     <div class="login-box-body">
         <p class="login-box-msg">진정한 고퀄인인가?</p>
 
-        <form action="<?=site_url('/auth/login?returnURL='.rawurlencode($returnURL))?>" method="post">
+        <form action="<?=site_url('/auth/login')?>" method="post">
             <div class="form-group has-feedback">
                 <input type="email" class="form-control" placeholder="Email" name="login_email"/>
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
