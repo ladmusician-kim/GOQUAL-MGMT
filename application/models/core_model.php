@@ -28,6 +28,28 @@ class Core_model extends CI_Model {
         return $result;
     }
 
+    function update ($data) {
+        try {
+            $core_id = $data['coreid'];
+            $data = array(
+                'title'     =>  $data['title'],
+                'summary'     =>  $data['summary'],
+                'content'    =>  $data['content'],
+                'updated'    =>  date("Y-m-d"),
+                'for_userid' => $this->session->userdata('user_id'),
+            );
+
+            var_dump($data);
+
+            $this->db->where('_coreid', $core_id);
+            $this->db->update('core', $data);
+
+            return true;
+        } catch(Exception $e) {
+            return false;
+        }
+    }
+
     function get_by_id($core_id){
         $this->db->select('_coreid, title, summary, content, core.updated, core.isdeprecated, user.username');
         $this->db->where(array ('_coreid'=> $core_id));
@@ -43,8 +65,6 @@ class Core_model extends CI_Model {
             $data = array(
                 'isdeprecated' => $isdeprecated
             );
-
-            var_dump($data);
 
             $this->db->where('_coreid', $core_id);
             $this->db->update('core', $data);

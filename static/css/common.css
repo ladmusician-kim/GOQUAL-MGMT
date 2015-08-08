@@ -11,3 +11,6 @@ a:hover{
 .gq-item-delete:hover {
     color: red;
 }
+.gq-item-content {
+    margin-top: 7px;
+}

@@ -38,7 +38,7 @@ if(file_exists($filename)) {
 }
 
 
-if(strpos($filename, 'create')) {
+if(strpos($filename, 'create') || strpos($filename, 'update')) {
 ?>
 <script src="/static/lib/smarteditor/js/HuskyEZCreator.js"></script>
 <?php
