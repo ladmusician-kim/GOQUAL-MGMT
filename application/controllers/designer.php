@@ -49,14 +49,17 @@ class Designer extends MGMT_Controller
             'title' => $this->input->post('title'),
             'summary' => $this->input->post('summary'),
             'content' => $this->input->post('content'),
+            'main_img_uri' => $this->handle_main_img($this->input->post('content'))
         );
+
         $rtv = $this->designer_model->add($input_data);
+
 
         if ($rtv != null && $rtv > 0) {
             $this->session->set_flashdata('message', '글작성에 성공적으로 저장하였습니다.');
             redirect('designer/index');
         } else {
-            $this->session->set_flashdata('message', '글작성하는데 오류가 발생했습니다. 개발자에게 문의하세요');
+            $this->session->set_flashdata('message', '글작성하는데 오류가 발생했습니다. 개발자에게 문의하세요.');
             $this->__get_views('_Designer/create.php', array('data' => $input_data));
         }
     }
@@ -108,5 +111,13 @@ class Designer extends MGMT_Controller
 
             redirect('designer/detail?designerid=' . $designer_id);
         }
+    }
+
+
+    function handle_main_img($content) {
+        $split_by_src = explode('src="', $content);
+        $main_img_uri = explode('" title=', $split_by_src[1])[0];
+
+        return $main_img_uri;
     }
 }
