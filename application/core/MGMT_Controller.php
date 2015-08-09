@@ -97,4 +97,13 @@ class MGMT_Controller extends CI_Controller
         // 2015-08-03 00:00: -> 2015-08-03
         return substr($date, 0, 10);
     }
+
+    /* 게시글 쓸때 대표이미지 handling 함수 */
+    function handle_main_img($content)
+    {
+        $split_by_src = explode('src="', $content);
+        $main_img_uri = explode('" title=', $split_by_src[1])[0];
+
+        return $main_img_uri;
+    }
 }

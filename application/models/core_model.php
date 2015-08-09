@@ -20,6 +20,7 @@ class Core_model extends CI_Model
         $input_data = array(
             'title' => $data['title'],
             'summary' => $data['summary'],
+            'main_img_uri' => $data['main_img_uri'],
             'content' => $data['content'],
             'created' => date("Y-m-d"),
             'updated' => date("Y-m-d"),
