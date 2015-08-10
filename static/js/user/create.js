@@ -1,3 +1,1 @@
-/**
- * Created by ladmusician on 15. 8. 10..
- */
+$(".select2").select2();

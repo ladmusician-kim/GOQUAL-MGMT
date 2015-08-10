@@ -1,11 +1,7 @@
 <div class="content-wrapper">
     <section class="content-header">
         <h1>
-            DEVELOPER 이야기
-            <small>
-                작성일: <?php echo date("Y-m-d", strtotime($item->updated)); ?>,
-                작성자: <?php echo $item->username ?>
-            </small>
+            회원
         </h1>
     </section>
 
@@ -16,24 +12,32 @@
                     <div class="form-horizontal">
                         <div class="box-body">
                             <div class="form-group">
-                                <label for="title" class="col-sm-1 control-label">제목</label>
+                                <label for="title" class="col-sm-1 control-label">아이디</label>
 
                                 <div class="col-sm-11 gq-item-content">
-                                    <?php echo $item->title ?>
+                                    <?php echo $item->username ?>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="summary" class="col-sm-1 control-label">간단한 설명</label>
+                                <label for="title" class="col-sm-1 control-label">이메일</label>
 
                                 <div class="col-sm-11 gq-item-content">
-                                    <?php echo $item->summary ?>
+                                    <?php echo $item->email ?>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="summary" class="col-sm-1 control-label">내용</label>
+                                <label for="summary" class="col-sm-1 control-label">분류</label>
 
                                 <div class="col-sm-11 gq-item-content">
-                                    <?php echo $item->content ?>
+                                    <?php echo $item->label ?>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="summary" class="col-sm-1 control-label">프로필</label>
+
+                                <div class="col-sm-11 gq-item-content">
+                                    <?php
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -45,14 +49,14 @@
                         if ($item->isdeprecated) {
                             ?>
                             <a class="btn btn-danger pull-right"
-                               href="<?= site_url('developer/change_isdeprecated?developerid=' . $item->_developerid) . '&isdeprecated=false' ?>">
+                               href="<?= site_url('user/change_isdeprecated?userid=' . $item->_id) . '&isdeprecated=false' ?>">
                                 <i class="fa fa-credit-card"></i> 살리기
                             </a>
                             <?php
                         } else {
                             ?>
                             <a class="btn btn-success pull-right"
-                               href="<?= site_url('developer/change_isdeprecated?developerid=' . $item->_developerid) . '&isdeprecated=true' ?>">
+                               href="<?= site_url('user/change_isdeprecated?userid=' . $item->_id) . '&isdeprecated=true' ?>">
                                 <i class="fa fa-credit-card"></i> 숨기기
                             </a>
 
@@ -61,11 +65,11 @@
                         ?>
 
                         <a class="btn btn-warning pull-right" style="margin-right: 5px;"
-                           href="<?= site_url('developer/update?developerid=' . $item->_developerid) ?>">
+                           href="<?= site_url('user/update?userid=' . $item->_id) ?>">
                             <i class="fa fa-file-excel-o"></i>수정하기
                         </a>
                         <a class="btn btn-primary pull-right" style="margin-right: 5px;"
-                           href="<?= site_url('developer/index') ?>">
+                           href="<?= site_url('user/index') ?>">
                             <i class="fa fa-download"></i>목록보기
                         </a>
                     </div>

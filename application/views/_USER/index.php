@@ -17,7 +17,8 @@
                                 <th>id</th>
                                 <th>이메일</th>
                                 <th>아이디</th>
-                                <th>생성일</th>
+                                <th>분류</th>
+                                <th>최근 로그인</th>
                                 <th>삭제하기</th>
                             </tr>
                             </thead>
@@ -31,7 +32,8 @@
                                             <?php echo $item->email ?>
                                         </a></td>
                                     <td><?php echo $item->username ?></td>
-                                    <td><?php echo date("Y-m-d", strtotime($item->updated)); ?></td>
+                                    <td><?php echo $item->label ?></td>
+                                    <td><?php if($item->logined) echo date("Y-m-d", strtotime($item->logined)); ?></td>
                                     <td>
                                         <?php
                                         if ($item->isdeprecated) {

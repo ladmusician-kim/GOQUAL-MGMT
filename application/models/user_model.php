@@ -9,8 +9,9 @@ class User_model extends CI_Model
 
     function gets()
     {
-        $this->db->select('_id, email, username, created, updated, isdeprecated');
+        $this->db->select('_id, email, username, created, user.logined, user.isdeprecated, user_category.label');
         $this->db->from('user');
+        $this->db->join('user_category', 'user_category._categoryid = user.for_categoryid');
         return $this->db->get()->result();
     }
 
@@ -27,8 +28,9 @@ class User_model extends CI_Model
 
     function get_by_id($user_id)
     {
-        $this->db->select('_id, username, email, updated, created, isdeprecated, isadmin');
+        $this->db->select('_id, username, email, updated, user.created, user.isdeprecated, isadmin, user_category.label, user_category._categoryid');
         $this->db->where(array('_id' => $user_id));
+        $this->db->join('user_category', 'user_category._categoryid = user.for_categoryid');
         $rtv = $this->db->get('user');
         $users = array_shift($rtv->result());
 
@@ -60,7 +62,8 @@ class User_model extends CI_Model
             'created' => date("Y-m-d"),
             'updated' => date("Y-m-d"),
             'isdeprecated' => FALSE,
-            'isadmin' => TRUE
+            'isadmin' => TRUE,
+            'for_categoryid' => $data['category']
         );
 
         $this->db->insert('user', $input_data);

@@ -1,3 +1,10 @@
-/**
- * Created by ladmusician on 15. 8. 10..
- */
+$(function () {
+    $('#data-table').DataTable({
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": true
+    });
+});

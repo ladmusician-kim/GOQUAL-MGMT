@@ -17,7 +17,6 @@
 
                                 <div class="col-sm-11">
                                     <input type="text" name="email" class="form-control"
-                                           value="<?php if ($data != null) echo $data->title ?>"
                                            id="email" placeholder="test@goqual.com">
                                 </div>
                             </div>
@@ -26,8 +25,21 @@
 
                                 <div class="col-sm-11">
                                     <input type="password" name="password" class="form-control"
-                                           value="<?php if ($data) echo $data->summary ?>"
                                            id="password" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="col-sm-1 control-label">분류</label>
+                                <div class="col-sm-11">
+                                    <select class="form-control select2" name="category">
+                                        <?php
+                                            foreach($categories as $item) {
+                                        ?>
+                                                <option value="<?php echo $item->_categoryid ?>"><?php echo $item->label ?></option>
+                                        <?php
+                                            }
+                                        ?>
+                                    </select>
                                 </div>
                             </div>
                         </div>
