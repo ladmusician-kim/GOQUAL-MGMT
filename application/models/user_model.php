@@ -7,55 +7,16 @@ class User_model extends CI_Model
         parent::__construct();
     }
 
-    /* read */
     function gets()
     {
-        return $this->db->query("SELECT * FROM user ORDER BY _id DESC")->result();
-    }
-
-    function get_all_user_count()
-    {
-        return $this->db->count_all_results('user');
-    }
-
-    function getbyid($user_id)
-    {
-        return $this->db->get_where('user', array('_id' => $user_id))->row();
+        $this->db->select('_id, email, username, created, updated, isdeprecated');
+        $this->db->from('user');
+        return $this->db->get()->result();
     }
 
     function get_user_by_email($option)
     {
-        return $this->db->get_where('user', array('email' => $option['email']))->row();
-    }
-
-    function add($data)
-    {
-        $input_data = array(
-            'username' => explode("@", $data['email'])[0],
-            'email' => $data['email'],
-            'password' => $data['password'],
-            'created' => date("Y-m-d"),
-            'isdeprecated' => FALSE,
-            'isadmin' => FALSE
-        );
-
-        $this->db->insert('user', $input_data);
-        $result = $this->db->insert_id();
-
-        return $result;
-    }
-
-    function edit($data)
-    {
-        $update_data = array(
-            'email' => $data['email'],
-            'password' => $data['password'],
-            'updated' => date("Y-m-d"),
-            'isdeprecated' => $data['isdeprecated'],
-            'isadmin' => $data['isadmin']
-        );
-
-        $this->db->update('user', $update_data, array('_id' => $data['id']));
+        return $this->db->get_where('user', array('email' => $option['email'], 'isdeprecated' => false))->row();
     }
 
     function logined($user)
@@ -64,34 +25,47 @@ class User_model extends CI_Model
         $this->db->update('user', $user, array('_id' => $user->_id));
     }
 
-
-    /* ngTable */
-    function get_users($sorting, $filter, $page = 1, $per_page = 10)
+    function get_by_id($user_id)
     {
-        $base_dto = new BASE_DTO;
+        $this->db->select('_id, username, email, updated, created, isdeprecated, isadmin');
+        $this->db->where(array('_id' => $user_id));
+        $rtv = $this->db->get('user');
+        $users = array_shift($rtv->result());
 
-        if ($page === 1) {
-            $this->db->limit($per_page);
+        return $users;
+    }
 
-        } else {
-            $this->db->limit($per_page, ($page - 1) * $per_page);
+    function change_isdeprecated($user_id, $isdeprecated)
+    {
+        try {
+            $data = array(
+                'isdeprecated' => $isdeprecated
+            );
+
+            $this->db->where('_id', $user_id);
+            $this->db->update('user', $data);
+
+            return true;
+        } catch (Exception $e) {
+            return false;
         }
-
-
-        $base_dto->set_value($this->db->get('user')->result());
-        return $base_dto;
     }
 
-    function get_admin_users()
+    function add($data)
     {
-        return $this->db->query("SELECT * FROM user WHERE isadmin = true  ORDER BY _id DESC")->result();
+        $input_data = array(
+            'username' => $data['username'],
+            'email' => $data['email'],
+            'password' => $data['password'],
+            'created' => date("Y-m-d"),
+            'updated' => date("Y-m-d"),
+            'isdeprecated' => FALSE,
+            'isadmin' => TRUE
+        );
+
+        $this->db->insert('user', $input_data);
+        $result = $this->db->insert_id();
+
+        return $result;
     }
-
-
 }
-
-/*
-foreach($users as $use) {
-    var_dump($user);
-}
-*/

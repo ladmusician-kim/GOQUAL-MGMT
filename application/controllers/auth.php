@@ -59,18 +59,18 @@ class Auth extends MGMT_Controller
 
     function handle_login($user)
     {
-        $username = explode('@', $user->email)[0];
+        //$username = explode('@', $user->email)[0];
         $this->user_model->logined($user);
 
         $this->session->set_flashdata('message', '로그인에 성공하였습니다.');
         $this->session->set_userdata('user_id', $user->_id);
-        $this->session->set_userdata('username', $username);
+        $this->session->set_userdata('username', $user->username);
         $this->session->set_userdata('is_login', TRUE);
 
         $returnURL = $this->input->get('returnURL');
 
         if ($returnURL === false || $returnURL === "") {
-            redirect('/home/index');
+            redirect('core/index');
         }
 
         redirect($returnURL);
