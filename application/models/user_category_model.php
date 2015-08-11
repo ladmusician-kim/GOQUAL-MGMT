@@ -16,9 +16,9 @@ class User_category_model extends CI_Model
 
     function get_by_id($category_id)
     {
-        $this->db->select('_categoryid, label, isdeprecated');
+        $this->db->select('_categoryid, label, isdeprecated, default_img_uri');
         $this->db->where(array('_categoryid' => $category_id));
-        $rtv = $this->db->get('user_cateogry');
+        $rtv = $this->db->get('user_category');
         $categories = array_shift($rtv->result());
 
         return $categories;

@@ -106,4 +106,37 @@ class MGMT_Controller extends CI_Controller
 
         return $main_img_uri;
     }
+
+    function handle_file_error($file, $return_error_url)
+    {
+        $file_error = $file['error'];
+        if ($file_error === 0) {
+            $upload_dir = '/home/hosting_users/goqualweb/www/static/img/profile/';
+            $upload_file = $upload_dir . basename($file['name']);
+
+            if (file_exists($upload_file)) {
+                return explode('www', $upload_file)[1];
+            } else {
+                if (move_uploaded_file($file['tmp_name'], $upload_file)) {
+                    return explode('www', $upload_file)[1];
+                } else {
+                    $this->session->set_flashdata('message', '사진을 저장하는데 오류가 발생했습니다.');
+                    redirect($return_error_url);
+                }
+            }
+
+        } else if ($file_error === 2) {
+            $this->session->set_flashdata('message', '사진이 너무 큼니다.');
+            redirect($return_error_url);
+        } else if ($file_error === 3) {
+            $this->session->set_flashdata('message', '사진 중 일부만 전송되었습니다.');
+            redirect($return_error_url);
+        } else if ($file_error === 4) {
+            $this->session->set_flashdata('message', '사진을 설정해주세요.');
+            redirect($return_error_url);
+        } else {
+            $this->session->set_flashdata('message', '사진을 저장하는데 오류가 발생했습니다.');
+            redirect($return_error_url);
+        }
+    }
 }

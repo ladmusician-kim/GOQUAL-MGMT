@@ -28,7 +28,7 @@ class User_model extends CI_Model
 
     function get_by_id($user_id)
     {
-        $this->db->select('_id, username, email, updated, user.created, user.isdeprecated, isadmin, user_category.label, user_category._categoryid');
+        $this->db->select('_id, username, email, updated, user.created, user.isdeprecated, isadmin, user.for_categoryid, user.profile_uri, user_category.label, user_category._categoryid');
         $this->db->where(array('_id' => $user_id));
         $this->db->join('user_category', 'user_category._categoryid = user.for_categoryid');
         $rtv = $this->db->get('user');
@@ -63,12 +63,34 @@ class User_model extends CI_Model
             'updated' => date("Y-m-d"),
             'isdeprecated' => FALSE,
             'isadmin' => TRUE,
-            'for_categoryid' => $data['category']
+            'for_categoryid' => $data['category'],
+            'profile_uri' => $data['profile_uri']
         );
 
         $this->db->insert('user', $input_data);
         $result = $this->db->insert_id();
 
         return $result;
+    }
+
+    function update($data)
+    {
+        try {
+            $input_data = array(
+                'username' => $data['username'],
+                'email' => $data['email'],
+                'password' => $data['password'],
+                'updated' => date("Y-m-d"),
+                'for_categoryid' => $data['category'],
+                'profile_uri' => $data['profile_uri']
+            );
+
+            $this->db->where('_id', $data['userid']);
+            $this->db->update('user', $input_data);
+
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
     }
 }

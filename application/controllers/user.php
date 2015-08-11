@@ -37,13 +37,28 @@ class User extends MGMT_Controller
         $this->__get_views('_USER/create.php', array('categories' => $categories));
     }
 
+    function update()
+    {
+        $user_id = $this->input->get('userid');
+        $user = $this->user_model->get_by_id($user_id);
+        $this->load->model('user_category_model');
+        $categories = $this->user_category_model->gets();
+        $this->__get_views('_USER/update.php', array('user' => $user, 'categories' => $categories));
+    }
+
     function submit()
     {
+        $profile_uri = "";
+        $categoryid = $this->input->post('category');
+        $this->load->model('user_category_model');
+        $category = $this->user_category_model->get_by_id($categoryid);
+
         $input_data = array(
             'email' => $this->input->post('email'),
             'username' => explode('@', $this->input->post('email'))[0],
             'password' => password_hash($this->input->post('password'), PASSWORD_BCRYPT),
-            'category' => $this->input->post('category')
+            'category' => $this->input->post('category'),
+            'profile_uri' => $category->default_img_uri
         );
 
         $rtv = $this->user_model->add($input_data);
@@ -56,6 +71,34 @@ class User extends MGMT_Controller
             $this->__get_views('_USER/create.php', array('data' => $input_data));
         }
     }
+
+    function submit_update()
+    {
+        $file = $_FILES['profile'];
+        $user_id = $this->input->post('user_id');
+
+        $upload_file = $this->handle_file_error($file, 'user/update?userid='.$user_id);
+
+        $input_data = array(
+            'userid' => $user_id,
+            'email' => $this->input->post('email'),
+            'username' => explode('@', $this->input->post('email'))[0],
+            'password' => password_hash($this->input->post('password'), PASSWORD_BCRYPT),
+            'category' => $this->input->post('category'),
+            'profile_uri' => $upload_file
+        );
+
+        $rtv = $this->user_model->update($input_data);
+
+        if ($rtv != null && $rtv > 0) {
+            $this->session->set_flashdata('message', '회원을 성공적으로 수정하였습니다.');
+            redirect('user/index');
+        } else {
+            $this->session->set_flashdata('message', '회원 수정하는데 오류가 발생했습니다. 개발자에게 문의하세요.');
+            $this->__get_views('_USER/create.php', array('data' => $input_data));
+        }
+    }
+
 
     /*
     *  userid
@@ -105,42 +148,22 @@ class User extends MGMT_Controller
         $label = $this->input->post('label');
         $file_error = $file['error'];
 
-        if ($file_error === 0) {
-            $upload_dir = '/home/hosting_users/goqualweb/www/static/img/profile/';
-            $upload_file = $upload_dir . basename($_FILES['default_img']['name']);
+        $upload_file = $this->handle_file_error($file, 'user/create_category');
 
-            if (move_uploaded_file($_FILES['default_img']['tmp_name'], $upload_file)) {
-                $this->load->model('user_category_model');
-                $input_data = array(
-                    'label' => $this->input->post('label'),
-                    'default_img_uri' => explode('www', $upload_file)[1]
-                );
+        $this->load->model('user_category_model');
+        $input_data = array(
+            'label' => $this->input->post('label'),
+            'default_img_uri' => $upload_file
+        );
 
-                $rtv = $this->user_category_model->add($input_data);
+        $rtv = $this->user_category_model->add($input_data);
 
-                if ($rtv != null && $rtv > 0) {
-                    $this->session->set_flashdata('message', '분류를 성공적으로 저장하였습니다.');
-                    redirect('user/category');
-                } else {
-                    $this->session->set_flashdata('message', '분류를 추가하는데 오류가 발생했습니다. 개발자에게 문의하세요.');
-                    $this->__get_views('_USER/create.php', array('data' => $input_data));
-                }
-            } else {
-                $this->session->set_flashdata('message', '기본 사진을 저장하는데 오류가 발생했습니다.');
-                redirect('user/create_category');
-            }
-        } else if ($file_error === 2) {
-            $this->session->set_flashdata('message', '기본 사진이 너무 큼니다.');
-            redirect('user/create_category');
-        } else if ($file_error === 3) {
-            $this->session->set_flashdata('message', '기본 사진 중 일부만 전송되었습니다.');
-            redirect('user/create_category');
-        } else if ($file_error === 4) {
-            $this->session->set_flashdata('message', '기본 사진을 설정해주세요.');
-            redirect('user/create_category');
+        if ($rtv != null && $rtv > 0) {
+            $this->session->set_flashdata('message', '분류를 성공적으로 저장하였습니다.');
+            redirect('user/category');
         } else {
-            $this->session->set_flashdata('message', '기본 사진을 저장하는데 오류가 발생했습니다.');
-            redirect('user/create_category');
+            $this->session->set_flashdata('message', '분류를 추가하는데 오류가 발생했습니다. 개발자에게 문의하세요.');
+            $this->__get_views('_USER/create.php', array('data' => $input_data));
         }
     }
 

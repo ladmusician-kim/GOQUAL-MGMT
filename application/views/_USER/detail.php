@@ -36,8 +36,7 @@
                                 <label for="summary" class="col-sm-1 control-label">프로필</label>
 
                                 <div class="col-sm-11 gq-item-content">
-                                    <?php
-                                    ?>
+                                    <img src="<?php echo $item->profile_uri ?>">
                                 </div>
                             </div>
                         </div>
