@@ -2,8 +2,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            GOQUAL
-            <small>회사 전반적인 이야기</small>
+            GOQUAL CATEGORY
         </h1>
     </section>
     <section class="content">
@@ -15,35 +14,29 @@
                             <thead>
                             <tr>
                                 <th>id</th>
-                                <th>제목</th>
-                                <th>작성자</th>
-                                <th>작성일</th>
-                                <th>삭제하기</th>
+                                <th>카테고리</th>
+                                <th>삭제</th>
                             </tr>
                             </thead>
                             <tbody>
                             <?php
-                            foreach ($cores as $item) {
+                            foreach ($items as $item) {
                                 ?>
                                 <tr>
-                                    <td><?php echo $item->_coreid ?></td>
-                                    <td><a href="<?= site_url('/core/detail?coreid=' . $item->_coreid) ?>">
-                                            <?php echo $item->title ?>
-                                        </a></td>
-                                    <td><?php echo $item->username ?></td>
-                                    <td><?php echo date("Y-m-d", strtotime($item->updated)); ?></td>
+                                    <td><?php echo $item->_categoryid ?></td>
+                                    <td><?php echo $item->label ?></td>
                                     <td>
                                         <?php
                                         if ($item->isdeprecated) {
                                             ?>
-                                            <a href="<?= site_url('core/change_isdeprecated?coreid=' . $item->_coreid) . '&isdeprecated=false' ?>"
+                                            <a href="<?= site_url('core/change_category_isdeprecated?categoryid=' . $item->_categoryid) . '&isdeprecated=false' ?>"
                                                class="gq-item-survive">
                                                 살리기
                                             </a>
                                             <?php
                                         } else {
                                             ?>
-                                            <a href="<?= site_url('core/change_isdeprecated?coreid=' . $item->_coreid . '&isdeprecated=true') ?>"
+                                            <a href="<?= site_url('core/change_category_isdeprecated?categoryid=' . $item->_categoryid . '&isdeprecated=true') ?>"
                                                class="gq-item-delete">
                                                 숨기기
                                             </a>
@@ -65,8 +58,8 @@
         </div>
         <div class="row no-print">
             <div class="col-xs-12">
-                <a href="<?= site_url('/core/create') ?>" class="btn btn-primary pull-right">
-                    <i class="fa fa-download"></i> 글쓰기
+                <a href="<?= site_url('/core/create_category') ?>" class="btn btn-primary pull-right">
+                    <i class="fa fa-download"></i> 추가하기
                 </a>
             </div>
         </div>

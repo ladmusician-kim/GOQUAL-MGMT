@@ -110,4 +110,67 @@ class Core extends MGMT_Controller
             redirect('core/detail?coreid=' . $core_id);
         }
     }
+
+
+
+
+
+
+    function category()
+    {
+        $this->load->model('core_category_model');
+        $categories = $this->core_category_model->gets();
+        $this->__get_views('_Core/category.php', array('items' => $categories));
+    }
+
+    function create_category()
+    {
+        $this->__get_views('_Core/create_category.php');
+    }
+
+    function submit_category()
+    {
+        $label = $this->input->post('label');
+
+        $this->load->model('core_category_model');
+        $input_data = array(
+            'label' => $this->input->post('label'),
+        );
+
+        $rtv = $this->core_category_model->add($input_data);
+
+        if ($rtv != null && $rtv > 0) {
+            $this->session->set_flashdata('message', '분류를 성공적으로 저장하였습니다.');
+            redirect('core/category');
+        } else {
+            $this->session->set_flashdata('message', '분류를 추가하는데 오류가 발생했습니다. 개발자에게 문의하세요.');
+            $this->__get_views('_Core/create.php', array('data' => $input_data));
+        }
+    }
+
+    function change_category_isdeprecated()
+    {
+        $this->load->model('core_category_model');
+        $category_id = $this->input->get('categoryid');
+        $isdeprecated = $this->input->get('isdeprecated') == 'true' ? true : false;
+
+        $rtv = $this->core_category_model->change_isdeprecated($category_id, $isdeprecated);
+        if ($rtv) {
+            if ($isdeprecated) {
+                $this->session->set_flashdata('message', '카테고리를 성공적으로 삭제하였습니다.');
+            } else {
+                $this->session->set_flashdata('message', '카테고리를 성공적으로 부활하였습니다.');
+            }
+
+            redirect('core/category');
+        } else {
+            if ($isdeprecated) {
+                $this->session->set_flashdata('message', '카테고리를 삭제하는데 오류가 발생했습니다. 개발자에게 문의하세요.');
+            } else {
+                $this->session->set_flashdata('message', '카테고리를 부활하는데 오류가 발생했습니다. 개발자에게 문의하세요.');
+            }
+
+            redirect('core/category');
+        }
+    }
 }
