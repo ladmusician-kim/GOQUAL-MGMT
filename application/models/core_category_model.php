@@ -14,6 +14,14 @@ class Core_category_model extends CI_Model
         return $this->db->get()->result();
     }
 
+    function gets_non_isdeprecated()
+    {
+        $this->db->select('_categoryid, label, isdeprecated');
+        $this->db->where(array('isdeprecated' => false));
+        $this->db->from('core_category');
+        return $this->db->get()->result();
+    }
+
     function get_by_id($category_id)
     {
         $this->db->select('_categoryid, label, isdeprecated');

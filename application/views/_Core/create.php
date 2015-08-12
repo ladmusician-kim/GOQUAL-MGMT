@@ -1,7 +1,7 @@
 <div class="content-wrapper">
     <section class="content-header">
         <h1>
-            CORE 글쓰기
+            GOQUAL 글쓰기
             <small>이쁘게 써주세요 회사 이미지가 달렸습니다.</small>
         </h1>
     </section>
@@ -19,6 +19,21 @@
                                     <input type="text" name="title" class="form-control"
                                            value="<?php if ($data != null) echo $data->title ?>"
                                            id="title" placeholder="title">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="col-sm-1 control-label">분류</label>
+                                <div class="col-sm-11">
+                                    <select class="form-control select2" name="category"
+                                            value="<?php if($data != null) echo $data->for_categoryid ?>">
+                                        <?php
+                                        foreach($categories as $item) {
+                                            ?>
+                                            <option value="<?php echo $item->_categoryid ?>"><?php echo $item->label ?></option>
+                                            <?php
+                                        }
+                                        ?>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">

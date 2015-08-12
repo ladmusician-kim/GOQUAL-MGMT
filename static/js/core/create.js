@@ -29,5 +29,5 @@ $(function () {
     });
 
 
-    //$('#smart_editor2').width($('.ng-title').width() - 10);
+    $(".select2").select2();
 })

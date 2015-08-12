@@ -30,6 +30,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label for="summary" class="col-sm-1 control-label">분류</label>
+
+                                <div class="col-sm-11 gq-item-content">
+                                    <?php echo $item->label ?>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label for="summary" class="col-sm-1 control-label">내용</label>
 
                                 <div class="col-sm-11 gq-item-content">

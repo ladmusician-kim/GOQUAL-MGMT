@@ -11,6 +11,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="box box-info">
+                    <input id="category_id" type="hidden" value="<?php echo $item->for_categoryid ?>">
                     <form class="form-horizontal" action="<?= site_url('/core/update_submit') ?>" method="post"
                           id="frm">
                         <input type="hidden" name="coreid" value='<?php if ($item) echo $item->_coreid ?>'>
@@ -25,6 +26,23 @@
                                            id="title" placeholder="title">
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label for="password" class="col-sm-1 control-label">분류</label>
+                                <div class="col-sm-11">
+                                    <select class="form-control select2" name="category"
+                                            value="<?php if($data != null) echo $item->for_categoryid ?>">
+                                        <?php
+                                        foreach($categories as $category) {
+                                            ?>
+                                            <option value="<?php echo $category->_categoryid ?>"><?php echo $category->label ?></option>
+                                            <?php
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <label for="summary" class="col-sm-1 control-label">간단한 설명</label>
 

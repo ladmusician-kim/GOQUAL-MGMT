@@ -18,7 +18,9 @@ class Core extends MGMT_Controller
 
     function create()
     {
-        $this->__get_views('_Core/create.php', array('data' => null));
+        $this->load->model('core_category_model');
+        $categories = $this->core_category_model->gets_non_isdeprecated();
+        $this->__get_views('_Core/create.php', array('data' => null, 'categories' => $categories));
     }
 
     function detail()
@@ -39,7 +41,11 @@ class Core extends MGMT_Controller
     {
         $core_id = $this->input->get('coreid');
         $core = $this->core_model->get_by_id($core_id);
-        $this->__get_views('_Core/update.php', array('item' => $core));
+
+        $this->load->model('core_category_model');
+        $categories = $this->core_category_model->gets_non_isdeprecated();
+
+        $this->__get_views('_Core/update.php', array('item' => $core, 'categories' => $categories));
     }
 
 
@@ -49,7 +55,8 @@ class Core extends MGMT_Controller
             'title' => $this->input->post('title'),
             'summary' => $this->input->post('summary'),
             'content' => $this->input->post('content'),
-            'main_img_uri' => $this->handle_main_img($this->input->post('content'))
+            'main_img_uri' => $this->handle_main_img($this->input->post('content')),
+            'for_categoryid' => $this->input->post('category')
         );
         $rtv = $this->core_model->add($input_data);
 
@@ -69,6 +76,7 @@ class Core extends MGMT_Controller
             'title' => $this->input->post('title'),
             'summary' => $this->input->post('summary'),
             'content' => $this->input->post('content'),
+            'for_categoryid' => $this->input->post('category')
         );
 
         $rtv = $this->core_model->update($input_data);

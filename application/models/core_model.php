@@ -9,9 +9,11 @@ class Core_model extends CI_Model
 
     function gets()
     {
-        $this->db->select('_coreid, title, core.updated, core.isdeprecated, user.username');
+        $this->db->select('_coreid, title, core.updated, core.isdeprecated, user.username, core_category.label');
         $this->db->from('core');
         $this->db->join('user', 'user._id = core.for_userid');
+        $this->db->join('core_category', 'core_category._categoryid = core.for_categoryid');
+        $this->db->order_by('_coreid', 'desc');
         return $this->db->get()->result();
     }
 
@@ -26,6 +28,7 @@ class Core_model extends CI_Model
             'updated' => date("Y-m-d"),
             'for_userid' => $this->session->userdata('user_id'),
             'isdeprecated' => FALSE,
+            'for_categoryid' => $data['for_categoryid']
         );
 
         $this->db->insert('core', $input_data);
@@ -44,6 +47,7 @@ class Core_model extends CI_Model
                 'content' => $data['content'],
                 'updated' => date("Y-m-d"),
                 'for_userid' => $this->session->userdata('user_id'),
+                'for_categoryid' => $data['for_categoryid']
             );
 
             var_dump($data);
@@ -59,9 +63,10 @@ class Core_model extends CI_Model
 
     function get_by_id($core_id)
     {
-        $this->db->select('_coreid, title, summary, content, core.updated, core.isdeprecated, user.username');
+        $this->db->select('_coreid, title, core.summary, content, core.updated, core.isdeprecated, core.for_categoryid, core_category.label, user.username');
         $this->db->where(array('_coreid' => $core_id));
         $this->db->join('user', 'user._id = core.for_userid');
+        $this->db->join('core_category', 'core_category._categoryid = core.for_categoryid');
         $rtv = $this->db->get('core');
         $cores = array_shift($rtv->result());
 
