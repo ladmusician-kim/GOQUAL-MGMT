@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>GOQUAL-MGMT</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="shortcut icon" href="/static/img/gq_symbol.png" />
     <link href="/static/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"
           type="text/css"/>
