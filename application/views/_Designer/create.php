@@ -11,6 +11,7 @@
             <div class="col-md-12">
                 <div class="box box-info">
                     <form class="form-horizontal" action="<?= site_url('/designer/submit') ?>" method="post" id="frm">
+                        <input type="hidden" name="dirkeycode" id="dirkeycode" value="designer">
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="title" class="col-sm-1 control-label">제목</label>

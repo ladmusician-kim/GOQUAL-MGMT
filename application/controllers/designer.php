@@ -70,6 +70,7 @@ class Designer extends MGMT_Controller
             'designerid' => $this->input->post('designerid'),
             'title' => $this->input->post('title'),
             'summary' => $this->input->post('summary'),
+            'main_img_uri' => $this->handle_main_img($this->input->post('content')),
             'content' => $this->input->post('content'),
         );
 

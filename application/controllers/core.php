@@ -76,6 +76,7 @@ class Core extends MGMT_Controller
             'title' => $this->input->post('title'),
             'summary' => $this->input->post('summary'),
             'content' => $this->input->post('content'),
+            'main_img_uri' => $this->handle_main_img($this->input->post('content')),
             'for_categoryid' => $this->input->post('category')
         );
 

@@ -50,6 +50,7 @@ class developer extends MGMT_Controller
             'summary' => $this->input->post('summary'),
             'content' => $this->input->post('content'),
         );
+
         $rtv = $this->developer_model->add($input_data);
 
         if ($rtv != null && $rtv > 0) {
@@ -69,6 +70,8 @@ class developer extends MGMT_Controller
             'summary' => $this->input->post('summary'),
             'content' => $this->input->post('content'),
         );
+
+        var_dump($this->input->post('content'));
 
         $rtv = $this->developer_model->update($input_data);
 

@@ -46,6 +46,7 @@ class Core_model extends CI_Model
                 'summary' => $data['summary'],
                 'content' => $data['content'],
                 'updated' => date("Y-m-d"),
+                'main_img_uri' => $data['main_img_uri'],
                 'for_userid' => $this->session->userdata('user_id'),
                 'for_categoryid' => $data['for_categoryid']
             );
